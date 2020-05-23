@@ -4,6 +4,7 @@ use App\User;
 use App\Profile;
 use App\Category;
 use App\Photo;
+use App\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,23 +28,38 @@ Route::get('/test', function(){
 
     // $user = User::find(1);
 
-    // return $user->profile;
+    // return $user->abc;
 
     // $profile = Profile::where('user_id', $user->id)->first();
 
     // return $profile;
-
-
     // $profile = Profile::find(1);
 
     // return $profile->user;
 
-
     // $category = Category::find(4);
     // return $category->photos;
 
-    $photo = Photo::find(2);
+    // $photo = Photo::find(2);
 
-    return $photo->category;
+    // return $photo->category;
+
+    // return $photo->tags;
+
+    // $tag = Tag::find(1);
+
+    // return $tag->photos;
+
+
+    $photo = Photo::find(1);
+
+    $photo->tags()->syncWithoutDetaching([1, 2]);
+
+    // attach
+    // detach
+    // sync
+    // syncWithoutDetaching
 
 });
+
+Route::get('/users', 'UserController@index')->name('users.index');

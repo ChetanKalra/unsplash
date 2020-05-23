@@ -11,7 +11,7 @@ class Category extends Model
 
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->hasMany(Photo::class, 'collection_id', 'id');
     }
 }
 
@@ -57,3 +57,26 @@ class Category extends Model
 
 // Many to Many
 // belongsToMany
+
+
+// classes
+
+// class_id
+
+// user_id -> created_by
+
+
+// classes
+// teachers
+
+// One Class - Many Teachers
+// One Teacher - Many Class
+
+
+// tags & photos
+
+// tag_photo
+
+// classes & teachers
+
+// class_teacher

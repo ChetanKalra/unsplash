@@ -23,7 +23,9 @@ class CategoryController extends Controller
 
     public function display()
     {
-        $categories = Category::all();
+        $categories = Category::with('photos')->get();
+
+        // return $categories;
 
         return view('categories', compact('categories'));
     }
