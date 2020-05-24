@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
+    protected $guarded = ['id'];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'collection_id', 'id');
@@ -13,6 +15,6 @@ class Photo extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'tag_photo')->withTimestamps();
     }
 }

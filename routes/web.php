@@ -7,22 +7,28 @@ use App\Photo;
 use App\Tag;
 
 Route::get('/', function () {
+    // return Auth::user()->name;
     return view('welcome');
 });
 
-Route::get('/categories/create', 'CategoryController@index')->name('category.create');
+Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function(){
+    Route::get('/create', 'CategoryController@index')->name('category.create');
+    Route::get('/', 'CategoryController@display')->name('category.display');
+    Route::get('/show/{id}', 'CategoryController@show')->name('category.show');
+    Route::post('/store', 'CategoryController@store')->name('category.store');
+    Route::get('/edit/{id}', 'CategoryController@edit')->name('category.edit');
+    Route::post('/update/{id}', 'CategoryController@update')->name('category.update');
+    Route::get('/delete/{id}', 'CategoryController@delete')->name('category.delete');
+});
 
-Route::get('/categories', 'CategoryController@display')->name('category.display');
 
-Route::get('/show/{id}', 'CategoryController@show')->name('category.show');
+Route::group(['prefix' => 'photos', 'middleware' => 'auth'], function(){
+    Route::get('/create', 'PhotoController@create')->name('photos.create');
+    Route::post('/store', 'PhotoController@store')->name('photos.store');
+    Route::get('/', 'PhotoController@index')->name('photos.index');
+});
 
-Route::post('/categories/store', 'CategoryController@store')->name('category.store');
 
-Route::get('/edit/{id}', 'CategoryController@edit')->name('category.edit');
-
-Route::post('/categories/update/{id}', 'CategoryController@update')->name('category.update');
-
-Route::get('/categories/delete/{id}', 'CategoryController@delete')->name('category.delete');
 
 Route::get('/test', function(){
 
@@ -63,3 +69,7 @@ Route::get('/test', function(){
 });
 
 Route::get('/users', 'UserController@index')->name('users.index');
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');

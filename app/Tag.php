@@ -8,6 +8,6 @@ class Tag extends Model
 {
     public function photos()
     {
-        return $this->belongsToMany(Photo::class)->withTimestamps();
+        return $this->belongsToMany(Photo::class, 'tag_photo')->withTimestamps();
     }
 }

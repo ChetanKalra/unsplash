@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhotoTagTable extends Migration
+class CreateTagPhotoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePhotoTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('photo_tag', function (Blueprint $table) {
+        Schema::create('tag_photo', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('tag_id');
             $table->unsignedBigInteger('photo_id');
@@ -28,6 +28,6 @@ class CreatePhotoTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo_tag');
+        Schema::dropIfExists('tag_photo');
     }
 }
