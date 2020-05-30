@@ -1,10 +1,12 @@
 <?php
 
+use App\Tag;
 use App\User;
+use App\Photo;
 use App\Profile;
 use App\Category;
-use App\Photo;
-use App\Tag;
+use App\Mail\WelcomeUser;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     // return Auth::user()->name;
@@ -76,3 +78,27 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/validation', 'ValidationController@index')->name('validation');
 Route::post('/validation/store', 'ValidationController@store')->name('validation.store');
+
+
+Route::get('/testmail', function(){
+
+
+
+    $welcomeUser = new WelcomeUser('Chetan');
+    
+    $emails = ['first@gmail.com', 'second@gmail.com', 'third@gmail.com'];
+    
+    Mail::to($emails)->send($welcomeUser);
+
+});
+
+Route::get('/delete/category', function(){
+
+    $category = Category::withTrashed()->find(1);
+
+    // return $category;
+    $category->restore();
+
+    // return Category::all();
+
+});
