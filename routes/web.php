@@ -73,3 +73,6 @@ Route::get('/users', 'UserController@index')->name('users.index');
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/validation', 'ValidationController@index')->name('validation');
+Route::post('/validation/store', 'ValidationController@store')->name('validation.store');
