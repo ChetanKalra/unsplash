@@ -11,9 +11,9 @@ class PhotoController extends Controller
 {
     public function create()
     {
-        $categories = Category::all();
+        // $categories = Category::all();
 
-        return view('photos.create', compact('categories'));
+        return view('photos.create');
     }
 
     public function store(Request $request)
@@ -44,7 +44,9 @@ class PhotoController extends Controller
 
     public function index()
     {
-        $photos = Photo::all();
+        $photos = Photo::paginate(2);
+
+        // ->get() // ->all()
 
         return view('photos.index', compact('photos'));
     }

@@ -1,9 +1,18 @@
-<html>
-<head>
-    <title>Create Category</title>
-</head>
+@extends('layouts.master')
 
-<body>
+@section('title')
+    Category Edit
+@endsection
+
+@push('styles')
+    <link rel="stylesheet" href="style1.css">
+@endpush
+
+@include('modals.confirmation')
+
+@section('content')
+    {{ $name }}
+
     <form action="{{ route('category.update', ['id' => $category->id]) }}" method="POST">
 
         <input type="text" value="{{ $category->name }}" name="category" placeholder="Category">
@@ -12,6 +21,8 @@
 
         @csrf
     </form>
-</body>
+@endsection
 
-</html>
+@section('content')
+    <h1>Heading 1</h1>
+@endsection

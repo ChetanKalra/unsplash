@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Mail\DeletedUser;
+use App\Mail\WelcomeUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,5 +43,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile()
     {
         return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function($user){
+            Mail::to($user->email)->send(new WelcomeUser($user->name));
+        });
     }
 }

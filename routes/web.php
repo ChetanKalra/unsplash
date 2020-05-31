@@ -32,43 +32,43 @@ Route::group(['prefix' => 'photos', 'middleware' => 'auth'], function(){
 
 
 
-Route::get('/test', function(){
+// Route::get('/test', function(){
 
-    // $user = User::find(1);
+//     // $user = User::find(1);
 
-    // return $user->abc;
+//     // return $user->abc;
 
-    // $profile = Profile::where('user_id', $user->id)->first();
+//     // $profile = Profile::where('user_id', $user->id)->first();
 
-    // return $profile;
-    // $profile = Profile::find(1);
+//     // return $profile;
+//     // $profile = Profile::find(1);
 
-    // return $profile->user;
+//     // return $profile->user;
 
-    // $category = Category::find(4);
-    // return $category->photos;
+//     // $category = Category::find(4);
+//     // return $category->photos;
 
-    // $photo = Photo::find(2);
+//     // $photo = Photo::find(2);
 
-    // return $photo->category;
+//     // return $photo->category;
 
-    // return $photo->tags;
+//     // return $photo->tags;
 
-    // $tag = Tag::find(1);
+//     // $tag = Tag::find(1);
 
-    // return $tag->photos;
+//     // return $tag->photos;
 
 
-    $photo = Photo::find(1);
+//     $photo = Photo::find(1);
 
-    $photo->tags()->syncWithoutDetaching([1, 2]);
+//     $photo->tags()->syncWithoutDetaching([1, 2]);
 
-    // attach
-    // detach
-    // sync
-    // syncWithoutDetaching
+//     // attach
+//     // detach
+//     // sync
+//     // syncWithoutDetaching
 
-});
+// });
 
 Route::get('/users', 'UserController@index')->name('users.index');
 
@@ -101,4 +101,10 @@ Route::get('/delete/category', function(){
 
     // return Category::all();
 
+});
+
+
+Route::get('/test', function(){
+    $photos = [];
+    return view('test', compact('photos'));
 });

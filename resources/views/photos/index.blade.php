@@ -22,6 +22,8 @@
                 </div>
             @endforeach
         </div>
+
+        {{ $photos->links() }}
     </div>
 </body>
 </html>

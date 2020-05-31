@@ -23,11 +23,11 @@ class CategoryController extends Controller
 
     public function display()
     {
-        $categories = Category::with('photos')->get();
+        // $categories = Category::with('photos')->get();
 
         // return $categories;
 
-        return view('categories', compact('categories'));
+        return view('categories');
     }
 
     public function show($id)
