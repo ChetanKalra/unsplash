@@ -81,7 +81,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    @if(Session::has('name'))
+                        {{ Session::get('name') }}
+                    @endif
                 </div>
 
                 <div class="links">
