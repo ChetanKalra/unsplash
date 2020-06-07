@@ -6,6 +6,7 @@ use App\Photo;
 use App\Profile;
 use App\Category;
 use App\Mail\WelcomeUser;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Session;
 
@@ -153,3 +154,19 @@ Route::resource('/categories', 'TestController');
 
 // })->name('test.submit');
 
+
+Route::view('/examples', 'examples');
+
+Route::get('/helpers', function(){
+    return session('_token');
+});
+
+
+Route::get('/testmail', function(){
+
+
+    Mail::to('admin@gmail.com')->queue(new WelcomeUser('Name'));
+
+    return view('examples');
+
+});
