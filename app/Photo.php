@@ -17,4 +17,9 @@ class Photo extends Model
     {
         return $this->belongsToMany(Tag::class, 'tag_photo')->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

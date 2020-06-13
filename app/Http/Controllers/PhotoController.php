@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Photo;
 use App\Category;
+use App\Mail\NewPhotoMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PhotoController extends Controller
 {
@@ -25,7 +28,6 @@ class PhotoController extends Controller
             'image' => 'required|image'
         ]);
 
-
         $no = rand(1, 100000000);
 
         $filename = "images/photos/photo$no.png";
@@ -35,9 +37,16 @@ class PhotoController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => Auth::user()->id,
-            'collection_id' => $request->category,
+            'category_id' => $request->category,
             'path' => $filename
         ]);
+
+        $adminUsers = User::where('is_admin', 1)->get();
+
+        foreach($adminUsers as $adminUser)
+        {
+            Mail::to($adminUser->email)->queue(new NewPhotoMail($photo));
+        }
 
         return back();
     }
