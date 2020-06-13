@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Photo;
 use App\Category;
+use Carbon\Carbon;
+use App\Notification;
 use App\Mail\NewPhotoMail;
 use Illuminate\Http\Request;
+use App\Jobs\SendNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Session;
 
 class PhotoController extends Controller
 {
@@ -23,7 +27,7 @@ class PhotoController extends Controller
     {
 
         $request->validate([
-            'title' => 'required|min:10|max:191',
+            'title' => 'required|max:191',
             'description' => 'required',
             'image' => 'required|image'
         ]);
@@ -41,12 +45,7 @@ class PhotoController extends Controller
             'path' => $filename
         ]);
 
-        $adminUsers = User::where('is_admin', 1)->get();
-
-        foreach($adminUsers as $adminUser)
-        {
-            Mail::to($adminUser->email)->queue(new NewPhotoMail($photo));
-        }
+        dispatch(new SendNotification($photo))->delay(Carbon::now()->addDays(30));
 
         return back();
     }
@@ -54,9 +53,11 @@ class PhotoController extends Controller
     public function index()
     {
         $photos = Photo::paginate(2);
-
-        // ->get() // ->all()
-
         return view('photos.index', compact('photos'));
+    }
+
+    public function returnSession()
+    {
+        return Session::all();
     }
 }

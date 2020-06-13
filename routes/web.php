@@ -5,14 +5,14 @@ use App\User;
 use App\Photo;
 use App\Profile;
 use App\Category;
+use Carbon\Carbon;
 use App\Mail\WelcomeUser;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
-// use Illuminate\Support\Facades\Session;
+use App\Mail\NewPhotoMarkdownMail;
 
 Route::get('/', function () {
     // return Auth::user()->name;
-    return view('welcome');
+    // return view('welcome');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'categories'], function(){
@@ -47,3 +47,10 @@ Route::view('/examples', 'examples');
 Route::get('/helpers', function(){
     return session('_token');
 });
+
+
+// Route::get('/session', function(){
+//     return Session::all();
+// });
+
+Route::get('/session', 'PhotoController@returnSession');
