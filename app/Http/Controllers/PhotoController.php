@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\User;
 use App\Photo;
 use App\Category;
@@ -9,10 +10,10 @@ use Carbon\Carbon;
 use App\Notification;
 use App\Mail\NewPhotoMail;
 use Illuminate\Http\Request;
+use App\Events\NewPhotoUpload;
 use App\Jobs\SendNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Session;
 
 class PhotoController extends Controller
 {
@@ -25,7 +26,6 @@ class PhotoController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'title' => 'required|max:191',
             'description' => 'required',
@@ -45,9 +45,11 @@ class PhotoController extends Controller
             'path' => $filename
         ]);
 
-        dispatch(new SendNotification($photo))->delay(Carbon::now()->addDays(30));
+        // dispatch(new SendNotification($photo))->delay(Carbon::now()->addDays(30));
 
-        return back();
+        event(new NewPhotoUpload($photo));
+
+        // return back();
     }
 
     public function index()

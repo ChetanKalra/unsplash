@@ -7,6 +7,7 @@ use App\Category;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,19 +31,22 @@ class AppServiceProvider extends ServiceProvider
     {
         // User::observe(UserObserver::class);
 
-        
+        // dd(Session::all());
 
-        // $categories = Category::all();
-        // View::share('categories', $categories);
+        // Session::put('locale', 'fr');
 
-        // $name = 'XYZ';
-        // View::share('name', $name);
+        if(!Session::has('locale'))
+            app()->setLocale('en');
+        else
+            app()->setLocale(Session::get('locale'));
 
         View::composer(['categories', 'photos.create'], function($view){
             $categories = Category::all();
 
             $view->with('categories', $categories)->with('name', 'Kira');
         });
+
+        
 
     }
 }

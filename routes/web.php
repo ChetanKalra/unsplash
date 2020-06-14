@@ -7,8 +7,10 @@ use App\Profile;
 use App\Category;
 use Carbon\Carbon;
 use App\Mail\WelcomeUser;
+use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use App\Mail\NewPhotoMarkdownMail;
+use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     // return Auth::user()->name;
@@ -54,3 +56,47 @@ Route::get('/helpers', function(){
 // });
 
 Route::get('/session', 'PhotoController@returnSession');
+
+
+Route::get('/fetch-users', function(){
+
+    // return User::all();
+
+    return DB::table('users')->select('name')->get();
+
+    // return DB::table('categories')->whereNull('deleted_at')->get();
+
+    // return DB::table('photos')->where('category_id', '!=', 1)->paginate(3);
+
+    // return DB::table('photos')->join('categories', 'photos.category_id', '=', 'categories.id')->get();
+
+    DB::table('categories')->insert([ 
+        'name' => 'Category Name',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now()
+    ]);
+
+    // $faker = Faker::create();
+
+    // $user = User::create([
+    //     'name' => $faker->name,
+    //     'email' => 'KIRA11@gmail.com',
+    //     'password' => 'password'
+    // ]);
+
+    // return $user;
+
+});
+
+Route::get('/lang', function(){
+
+    app()->setLocale('fr');
+    
+    return view('lang');
+});
+
+Route::get('/locale/{locale}', function($locale){
+    Session::put('locale', $locale);
+
+    return back();
+})->name('change.language');

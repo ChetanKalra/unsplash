@@ -8,9 +8,11 @@ class Photo extends Model
 {
     protected $guarded = ['id'];
 
+    protected $table = 'users';
+
     public function category()
     {
-        return $this->belongsTo(Category::class, 'collection_id', 'id')->withTrashed();
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withTrashed();
     }
 
     public function tags()
