@@ -8,7 +8,7 @@ class Photo extends Model
 {
     protected $guarded = ['id'];
 
-    protected $table = 'users';
+    protected $table = 'photos';
 
     public function category()
     {

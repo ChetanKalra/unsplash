@@ -14,6 +14,7 @@ use App\Events\NewPhotoUpload;
 use App\Jobs\SendNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -29,13 +30,30 @@ class PhotoController extends Controller
         $request->validate([
             'title' => 'required|max:191',
             'description' => 'required',
-            'image' => 'required|image'
+            'image' => 'nullable|image'
         ]);
 
-        $no = rand(1, 100000000);
+        // dd(request());
 
-        $filename = "images/photos/photo$no.png";
-        move_uploaded_file($request->file('image'), $filename);
+        if($request->hasFile('image'))
+        {
+            $filename = $request->file('image')->store('images/photos', 'public_directory');
+        }
+        else{
+            $filename = 'images/photos/default.png';
+        }
+
+
+        // $path = Storage::putFile('images/photos', $request->file('image'));
+
+        // Storage::delete('images/photos/filename.jpeg');
+
+        // $filename = $request->file('image')->storeAs('images/photos', 'somename.jpeg', 'public');
+
+        // $no = rand(1, 100000000);
+
+        // $filename = "images/photos/photo$no.png";
+        // move_uploaded_file(, $filename);
 
         $photo = Photo::create([
             'title' => $request->title,
@@ -47,7 +65,7 @@ class PhotoController extends Controller
 
         // dispatch(new SendNotification($photo))->delay(Carbon::now()->addDays(30));
 
-        event(new NewPhotoUpload($photo));
+        // event(new NewPhotoUpload($photo));
 
         // return back();
     }

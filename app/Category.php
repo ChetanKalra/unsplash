@@ -11,6 +11,13 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
+    // protected $hidden = ['id'];
+
+    // public function getUpdatedAtAttribute($value)
+    // {
+    //     return 'abc';
+    // }
+
 
     public function photos()
     {

@@ -46,22 +46,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Profile::class, 'user_id', 'id');
     }
 
-    public function getIsAdminAttribute($value)
-    {
-        if($value) return 'admin';
+    // public function getIsAdminAttribute($value)
+    // {
+    //     if($value) return 'admin';
         
-        return 'user';
-    }
+    //     return 'user';
+    // }
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y');
-    }
+    // public function getCreatedAtAttribute($value)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y');
+    // }
 
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y');
-    }
+    // public function getUpdatedAtAttribute($value)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y');
+    // }
 
     public function setPasswordAttribute($value)
     {
